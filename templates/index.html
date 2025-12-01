@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurisCaldas AI - Tu Guía Turístico Inteligente</title>
+    <meta name="description" content="Descubre Caldas, Colombia con TurisCaldas AI. Turismo sostenible, paisajes cafeteros, termales y aviturismo.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <img src="/static/imgs/logo.jpeg" alt="TurisCaldas AI" class="logo-img">
+                <span class="logo-text">TurisCaldas <span class="logo-accent">AI</span></span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="#about" onclick="scrollToSection('about')">Nosotros</a>
+                <a href="#experiences" onclick="scrollToSection('experiences')">Experiencias</a>
+                <a href="#aviturismo" onclick="scrollToSection('aviturismo')">Aviturismo</a>
+                <a href="#contact" onclick="scrollToSection('contact')">Contacto</a>
+            </nav>
+            
+            <button class="btn btn-primary" onclick="openChat()">
+                💬 Pregúntale a la IA
+            </button>
+            
+            <button id="menuToggle" class="menu-toggle">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1>Descubre la magia de <span class="text-accent">Caldas</span></h1>
+            <p class="hero-subtitle">Turismo sostenible en el corazón del Eje Cafetero colombiano</p>
+            
+            <div class="hero-search">
+                <input type="text" id="heroSearch" placeholder="¿Qué te gustaría descubrir en Caldas?" 
+                       onkeypress="if(event.key==='Enter') searchFromHero()">
+                <button class="btn btn-primary" onclick="searchFromHero()">
+                    🔍 Buscar
+                </button>
+            </div>
+            
+            <div class="hero-tags">
+                <button class="tag-btn" onclick="openChatWithMessage('Quiero hacer la Ruta del Café en Caldas')">☕ Café</button>
+                <button class="tag-btn" onclick="openChatWithMessage('Quiero visitar termales cerca de Manizales')">♨️ Termales</button>
+                <button class="tag-btn" onclick="openChatWithMessage('Me interesa el aviturismo y observación de aves en Caldas')">🐦 Aves</button>
+                <button class="tag-btn" onclick="openChatWithMessage('Busco turismo de aventura: senderismo, parapente o Nevado del Ruiz')">🏔️ Aventura</button>
+                <button class="tag-btn" onclick="openChatWithMessage('Quiero conocer parques naturales y reservas en Caldas')">🌿 Naturaleza</button>
+            </div>
+            
+            <button class="btn btn-hero" onclick="openChat()">
+                🤖 Pregúntale al Asistente AI
+            </button>
+        </div>
+    </section>
+
+    <!-- ========== ABOUT ========== -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">¿Por qué <span class="text-accent">TurisCaldas AI</span>?</h2>
+            <p class="section-subtitle">Tecnología e inteligencia artificial al servicio del turismo sostenible</p>
+            
+            <div class="about-cards">
+                <div class="about-card">
+                    <div class="card-icon">🌿</div>
+                    <h3>Sostenibilidad</h3>
+                    <p>Promovemos un turismo responsable que protege nuestros ecosistemas y apoya a las comunidades locales.</p>
+                </div>
+                
+                <div class="about-card">
+                    <div class="card-icon">🤖</div>
+                    <h3>Inteligencia Artificial</h3>
+                    <p>Nuestro asistente AI te brinda información precisa y personalizada sobre destinos, alojamientos y actividades.</p>
+                </div>
+                
+                <div class="about-card">
+                    <div class="card-icon">🤝</div>
+                    <h3>Conexión Local</h3>
+                    <p>Te conectamos directamente con operadores turísticos, guías locales y experiencias auténticas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== EXPERIENCES ========== -->
+    <section id="experiences" class="experiences">
+        <div class="container">
+            <h2 class="section-title">Experiencias <span class="text-accent">Únicas</span></h2>
+            <p class="section-subtitle">Vive momentos inolvidables en el Paisaje Cultural Cafetero</p>
+            
+            <div class="experience-cards">
+                <div class="experience-card">
+                    <div class="card-image" style="background-image: url('/static/imgs/ruta-del-cafe.jpg')"></div>
+                    <div class="card-body">
+                        <div class="card-rating">⭐⭐⭐⭐⭐ <span>4.8</span></div>
+                        <h3>☕ Ruta del Café</h3>
+                        <p>Recorre fincas cafeteras tradicionales y aprende el arte del café de origen.</p>
+                        <div class="card-price">💰 Desde <strong>$180.000 COP</strong>/persona</div>
+                        <button class="btn btn-primary" onclick="openChatWithMessage('Quiero hacer la Ruta del Café en Caldas. ¿Qué fincas me recomiendas, precios y cómo llegar?')">Más info</button>
+                    </div>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="card-image" style="background-image: url('/static/imgs/ecotermales.jpg')"></div>
+                    <div class="card-body">
+                        <div class="card-rating">⭐⭐⭐⭐⭐ <span>4.9</span></div>
+                        <h3>♨️ Termales</h3>
+                        <p>Relájate en aguas termales naturales rodeado de montañas y naturaleza.</p>
+                        <div class="card-price">💰 Desde <strong>$60.000 COP</strong>/persona</div>
+                        <button class="btn btn-primary" onclick="openChatWithMessage('Quiero visitar termales cerca de Manizales. ¿Cuáles son los mejores, precios y horarios?')">Más info</button>
+                    </div>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="card-image" style="background-image: url('/static/imgs/nevado-del-ruiz.jpg')"></div>
+                    <div class="card-body">
+                        <div class="card-rating">⭐⭐⭐⭐⭐ <span>4.7</span></div>
+                        <h3>🏔️ Nevado del Ruiz</h3>
+                        <p>Aventúrate al volcán nevado y disfruta de paisajes de páramo únicos.</p>
+                        <div class="card-price">💰 Desde <strong>$180.000 COP</strong>/persona</div>
+                        <button class="btn btn-primary" onclick="openChatWithMessage('Quiero hacer turismo de aventura y visitar el Nevado del Ruiz. ¿Cómo llego, qué necesito y cuánto cuesta?')">Más info</button>
+                    </div>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="card-image" style="background-image: url('/static/imgs/aventura-extrema.jpg')"></div>
+                    <div class="card-body">
+                        <div class="card-rating">⭐⭐⭐⭐⭐ <span>4.6</span></div>
+                        <h3>🪂 Aventura Extrema</h3>
+                        <p>Parapente, rafting y deportes de aventura en paisajes espectaculares.</p>
+                        <div class="card-price">💰 Desde <strong>$170.000 COP</strong>/persona</div>
+                        <button class="btn btn-primary" onclick="openChatWithMessage('Quiero hacer deportes extremos en Caldas. ¿Qué opciones hay de parapente, rafting o canopy?')">Más info</button>
+                    </div>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="card-image" style="background-image: url('/static/imgs/artesanias-de-caldas.jpg')"></div>
+                    <div class="card-body">
+                        <div class="card-rating">⭐⭐⭐⭐⭐ <span>4.7</span></div>
+                        <h3>🎨 Artesanías Caldenses</h3>
+                        <p>Descubre el arte local: sombreros, cestería, cerámica y tejidos tradicionales.</p>
+                        <div class="card-price">💰 Desde <strong>$20.000 COP</strong>/persona</div>
+                        <button class="btn btn-primary" onclick="openChatWithMessage('Quiero conocer artesanías típicas de Caldas. ¿Dónde puedo comprar y hacer talleres?')">Más info</button>
+                    </div>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="card-image" style="background-image: url('/static/imgs/city-tour.jpg')"></div>
+                    <div class="card-body">
+                        <div class="card-rating">⭐⭐⭐⭐⭐ <span>4.8</span></div>
+                        <h3>🏙️ City Tour Manizales</h3>
+                        <p>Recorre la ciudad de las puertas abiertas: Catedral, Plaza de Bolívar, Torre del Cable.</p>
+                        <div class="card-price">💰 Desde <strong>$40.000 COP</strong>/persona</div>
+                        <button class="btn btn-primary" onclick="openChatWithMessage('Quiero hacer un city tour por Manizales. ¿Qué lugares visitar y cómo llegar?')">Más info</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== AVITURISMO ========== -->
+    <section id="aviturismo" class="aviturismo">
+        <div class="container">
+            <h2 class="section-title">🐦 Aviturismo en <span class="text-accent">Caldas</span></h2>
+            <p class="section-subtitle">Caldas es hogar de más de <strong>900 especies de aves</strong>. Somos uno de los destinos más biodiversos del planeta.</p>
+            
+            <!-- Categorías de aviturismo -->
+            <div class="avi-categories">
+                <button class="avi-cat-btn active" onclick="filterBirds('all')">🦅 Todas</button>
+                <button class="avi-cat-btn" onclick="filterBirds('endemicas')">🌟 Endémicas</button>
+                <button class="avi-cat-btn" onclick="filterBirds('exoticas')">🌈 Exóticas</button>
+                <button class="avi-cat-btn" onclick="filterBirds('migratorias')">✈️ Migratorias</button>
+            </div>
+            
+            <div class="experience-cards">
+                <!-- Barranquero - Ave Endémica -->
+                <div class="experience-card" data-category="endemicas">
+                    <div class="card-image" style="background-image: url('/static/imgs/barranquero.jpg')"></div>
+                    <div class="card-body">
+                        <span class="card-badge endemica">🌟 Endémica</span>
+                        <div class="card-rating">📍 <span>Bosques andinos 1000-2500m</span></div>
+                        <h3>🦜 Barranquero</h3>
+                        <p>Ave emblemática de Caldas. Plumaje verde-azul iridiscente con cola en forma de raqueta. Habita en bosques andinos.</p>
+                        <div class="card-price">🔭 <strong>Momotus momota</strong> · 38-48 cm</div>
+                        <button class="btn btn-primary" onclick="openChatWithMessage('Quiero un tour para ver Barranqueros en Caldas. ¿Dónde puedo encontrarlos y cuánto cuesta?')">Ver tours</button>
+                    </div>
+                </div>
+                
+                <!-- Colibrí - Ave Exótica -->
+                <div class="experience-card" data-category="exoticas">
+                    <div class="card-image" style="background-image: url('/static/imgs/Colibri.jpg')"></div>
+                    <div class="card-body">
+                        <span class="card-badge exotica">🌈 Exótica</span>
+                        <div class="card-rating">🌸 <span>+50 especies en la región</span></div>
+                        <h3>💎 Colibrí Inca</h3>
+                        <p>Colibrí con collar blanco distintivo. Más de 50 especies en la región. Común en bosques nublados del Eje Cafetero.</p>
+                        <div class="card-price">🔭 <strong>Coeligena torquata</strong> · 12-14 cm</div>
+                        <button class="btn btn-primary" onclick="openChatWithMessage('Quiero un tour para observar colibríes en Caldas. ¿Cuáles son los mejores lugares?')">Ver tours</button>
+                    </div>
+                </div>
+                
+                <!-- Tángara - Ave Exótica -->
+                <div class="experience-card" data-category="exoticas">
+                    <div class="card-image" style="background-image: url('/static/imgs/Tangara-Multicolor.jpg')"></div>
+                    <div class="card-body">
+                        <span class="card-badge exotica">🌈 Exótica</span>
+                        <div class="card-rating">📸 <span>Ideal para fotografía</span></div>
+                        <h3>🌈 Tángara Multicolor</h3>
+                        <p>Plumaje multicolor vibrante, ideal para fotografía. Habita en bosques húmedos de 500-2000m de altura.</p>
+                        <div class="card-price">🔭 <strong>Tangara gyrola</strong> · 13-14 cm</div>
+                        <button class="btn btn-primary" onclick="openChatWithMessage('Quiero fotografiar Tángaras y aves coloridas en Caldas. ¿Qué tours hay?')">Ver tours</button>
+                    </div>
+                </div>
+                
+                <!-- Tucán - Ave Exótica -->
+                <div class="experience-card" data-category="exoticas">
+                    <div class="card-image" style="background-image: url('/static/imgs/tucan.jpg')"></div>
+                    <div class="card-body">
+                        <span class="card-badge exotica">🌈 Exótica</span>
+                        <div class="card-rating">🌴 <span>Zonas bajas y medias</span></div>
+                        <h3>🦜 Tucán</h3>
+                        <p>Inconfundible pico multicolor. Ave icónica de los bosques tropicales. Avistamiento en zonas bajas y medias.</p>
+                        <div class="card-price">🔭 <strong>Ramphastos</strong> · 42-55 cm</div>
+                        <button class="btn btn-primary" onclick="openChatWithMessage('Quiero ver Tucanes en Caldas. ¿Dónde hay tours de avistamiento?')">Ver tours</button>
+                    </div>
+                </div>
+                
+                <!-- Reinita - Ave Migratoria -->
+                <div class="experience-card" data-category="migratorias">
+                    <div class="card-image" style="background-image: url('/static/imgs/reinitacerulea.jpeg')"></div>
+                    <div class="card-body">
+                        <span class="card-badge migratoria">✈️ Migratoria</span>
+                        <div class="card-rating">📅 <span>Sep - Abril desde Norteamérica</span></div>
+                        <h3>🐦 Reinita Cerúlea</h3>
+                        <p>Ave migratoria de Norteamérica. Llega entre septiembre y abril. Especie en conservación prioritaria.</p>
+                        <div class="card-price">🔭 <strong>Setophaga cerulea</strong> · 11 cm</div>
+                        <button class="btn btn-primary" onclick="openChatWithMessage('Quiero ver aves migratorias en Caldas. ¿Cuál es la mejor época y lugares?')">Ver tours</button>
+                    </div>
+                </div>
+                
+                <!-- Afrechero - Ave en Peligro -->
+                <div class="experience-card" data-category="endemicas">
+                    <div class="card-image" style="background-image: url('/static/imgs/afrechero.jpg')"></div>
+                    <div class="card-body">
+                        <span class="card-badge peligro">⚠️ En Peligro</span>
+                        <div class="card-rating">🆘 <span>Especie en extinción</span></div>
+                        <h3>🐦 Afrechero</h3>
+                        <p>Ave endémica de la región en peligro de extinción. Su conservación es prioritaria. Avistarlo es una experiencia única.</p>
+                        <div class="card-price">🔭 <strong>Zonotrichia capensis</strong> · 14-16 cm</div>
+                        <button class="btn btn-primary" onclick="openChatWithMessage('Quiero ver el Afrechero en Caldas. ¿Dónde puedo encontrarlo y cómo ayudar a su conservación?')">Ver tours</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="aviturismo-info">
+                <p>🔭 Más de 50 senderos especializados · Guías expertos certificados · Especies endémicas y migratorias</p>
+                <button class="btn btn-primary btn-lg" onclick="openChatWithMessage('Quiero planificar un tour completo de aviturismo en Caldas. Somos un grupo interesado en observación de aves.')">
+                    🦅 Planifica tu ruta de aves
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== REGISTRO NEGOCIOS ========== -->
+    <section id="registro" class="registro-section">
+        <div class="container">
+            <h2 class="section-title">¿Tienes un negocio turístico? <span class="text-accent">¡Únete!</span></h2>
+            <p class="section-subtitle">Registra tu hotel, restaurante, tour o servicio para que los viajeros te encuentren</p>
+            
+            <div class="registro-cards">
+                <div class="registro-card">
+                    <div class="registro-icon">🏨</div>
+                    <h3>Hospedaje</h3>
+                    <p>Hoteles, hostales, fincas y glamping</p>
+                </div>
+                <div class="registro-card">
+                    <div class="registro-icon">🍽️</div>
+                    <h3>Gastronomía</h3>
+                    <p>Restaurantes, cafés y experiencias culinarias</p>
+                </div>
+                <div class="registro-card">
+                    <div class="registro-icon">🚐</div>
+                    <h3>Tours</h3>
+                    <p>Operadores turísticos y guías locales</p>
+                </div>
+                <div class="registro-card">
+                    <div class="registro-icon">🎭</div>
+                    <h3>Experiencias</h3>
+                    <p>Actividades, talleres y cultura local</p>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary btn-lg" onclick="openRegistroModal()">
+                📝 Registrar mi negocio
+            </button>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer id="contact" class="footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h4>🦜 TurisCaldas AI</h4>
+                <p>Tu asistente inteligente para descubrir Caldas, Colombia.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Enlaces</h4>
+                <a href="#about">Nosotros</a>
+                <a href="#experiences">Experiencias</a>
+                <a href="#aviturismo">Aviturismo</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>📧 info@turiscaldas.co</p>
+                <p>📍 Manizales, Caldas</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 TurisCaldas AI - Turismo Sostenible con Inteligencia Artificial</p>
+        </div>
+    </footer>
+
+    <!-- ========== CHAT MODAL ========== -->
+    <div id="chatModal" class="chat-modal">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <span>🦜</span>
+                    <span>TurisCaldas AI</span>
+                </div>
+                <div class="chat-actions">
+                    <button id="historyBtn" class="btn-icon" title="Historial">📜</button>
+                    <button onclick="nuevaConversacion()" class="btn-icon" title="Nueva conversación">🔄</button>
+                    <button id="closeChatBtn" class="btn-icon" title="Cerrar">✕</button>
+                </div>
+            </div>
+            
+            <div id="chatMessages" class="chat-messages">
+                <!-- Mensajes del chat -->
+            </div>
+            
+            <div id="sourcesContainer" class="sources-container" style="display: none;">
+                <!-- Fuentes consultadas -->
+            </div>
+            
+            <form id="chatForm" class="chat-input-form">
+                <div class="chat-input-wrapper">
+                    <input type="text" id="chatInput" placeholder="Escribe tu pregunta sobre Caldas..." autocomplete="off">
+                    <button type="button" id="micBtn" class="btn-icon mic-btn" title="Usar micrófono">🎤</button>
+                    <button type="submit" class="btn-send">Enviar</button>
+                </div>
+            </form>
+            
+            <!-- Upload de documentos (admin) -->
+            <details class="upload-section">
+                <summary>📁 Subir documentos (Admin)</summary>
+                <form id="uploadForm" class="upload-form" enctype="multipart/form-data">
+                    <input type="file" id="fileInput" accept=".pdf,.txt,.docx" multiple>
+                    <div id="filesList" class="files-list"></div>
+                    <button type="submit" id="uploadBtn" class="btn btn-outline" disabled>Subir documentos</button>
+                    <div id="uploadStatus" class="upload-status"></div>
+                </form>
+            </details>
+        </div>
+    </div>
+
+    <!-- ========== HISTORIAL MODAL ========== -->
+    <div id="historyModal" class="history-modal">
+        <div class="history-container">
+            <div class="history-header">
+                <h3>📜 Historial de conversaciones</h3>
+                <button class="close-history btn-icon">✕</button>
+            </div>
+            <div id="historyList" class="history-list">
+                <!-- Historial -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== REGISTRO NEGOCIO MODAL ========== -->
+    <div id="registroModal" class="registro-modal">
+        <div class="registro-form-container">
+            <div class="registro-form-header">
+                <h3>📝 Registra tu Negocio Turístico</h3>
+                <button class="btn-icon" onclick="closeRegistroModal()">✕</button>
+            </div>
+            
+            <form id="registroNegocioForm" class="registro-form">
+                <div class="form-group">
+                    <label for="negocioNombre">Nombre del negocio *</label>
+                    <input type="text" id="negocioNombre" required placeholder="Ej: Finca Hotel El Cafetal">
+                </div>
+                
+                <div class="form-group">
+                    <label for="negocioTipo">Tipo de negocio *</label>
+                    <select id="negocioTipo" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="hotel">🏨 Hotel / Hospedaje</option>
+                        <option value="restaurante">🍽️ Restaurante / Café</option>
+                        <option value="tour">🚐 Tour / Operador Turístico</option>
+                        <option value="guia">🧭 Guía Local</option>
+                        <option value="experiencia">🎭 Experiencia / Actividad</option>
+                        <option value="transporte">🚗 Transporte</option>
+                        <option value="otro">📦 Otro</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="negocioMunicipio">Municipio *</label>
+                        <select id="negocioMunicipio" required>
+                            <option value="">Selecciona</option>
+                            <option value="manizales">Manizales</option>
+                            <option value="villamaria">Villamaría</option>
+                            <option value="chinchina">Chinchiná</option>
+                            <option value="palestina">Palestina</option>
+                            <option value="neira">Neira</option>
+                            <option value="salamina">Salamina</option>
+                            <option value="aguadas">Aguadas</option>
+                            <option value="pacora">Pácora</option>
+                            <option value="supía">Supía</option>
+                            <option value="riosucio">Riosucio</option>
+                            <option value="otro">Otro municipio</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="negocioPrecio">Rango de precios</label>
+                        <select id="negocioPrecio">
+                            <option value="">Selecciona</option>
+                            <option value="economico">💰 Económico</option>
+                            <option value="moderado">💰💰 Moderado</option>
+                            <option value="premium">💰💰💰 Premium</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="negocioContacto">Nombre de contacto *</label>
+                    <input type="text" id="negocioContacto" required placeholder="Tu nombre completo">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="negocioTelefono">Teléfono / WhatsApp *</label>
+                        <input type="tel" id="negocioTelefono" required placeholder="300 123 4567">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="negocioEmail">Correo electrónico</label>
+                        <input type="email" id="negocioEmail" placeholder="correo@ejemplo.com">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="negocioDescripcion">Descripción breve del negocio *</label>
+                    <textarea id="negocioDescripcion" required rows="3" placeholder="Cuéntanos qué ofreces, servicios, horarios, etc."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeRegistroModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">📤 Enviar Registro</button>
+                </div>
+                
+                <p class="form-note">* Campos obligatorios. Nos pondremos en contacto contigo para verificar la información.</p>
+            </form>
+            
+            <div id="registroExito" class="registro-exito" style="display: none;">
+                <div class="exito-icon">✅</div>
+                <h4>¡Registro enviado!</h4>
+                <p>Gracias por registrar tu negocio. Nos pondremos en contacto contigo pronto para verificar la información y activar tu perfil.</p>
+                <button class="btn btn-primary" onclick="closeRegistroModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== FLOATING CHAT BUTTON ========== -->
+    <button id="openChatBtn" class="chat-fab" onclick="openChat()">
+        🤖
+    </button>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
