@@ -44,6 +44,18 @@ training_data = [
     "parque los nevados", "avistamiento de aves", "caminatas",
     "actividades de aventura", "parapente", "ciclomontañismo",
     "reservas naturales", "cascadas en caldas",
+    
+    # 🌿 Ecoparques y Reservas Naturales
+    "reserva rio blanco", "río blanco", "rioblanco", "bosque popular",
+    "bosque popular el prado", "ecoparque yarumos", "los yarumos",
+    "ecoparque alcázares", "alcázares arenillo", "recinto del pensamiento",
+    "jardín botánico", "red de ecoparques", "parques naturales manizales",
+    "senderos ecológicos", "caminatas ecológicas", "turismo de naturaleza",
+    
+    # 🐦 Aviturismo
+    "aviturismo", "turismo de aves", "observación de aves", "birdwatching",
+    "aves de caldas", "aves endémicas", "tucanes", "colibríes", "tangaras",
+    "tour de aves", "guía de aves", "aviturismo económico",
 
     # 🏛️ Cultura y pueblos
     "salamina caldas", "aguadas", "pueblos patrimonio",

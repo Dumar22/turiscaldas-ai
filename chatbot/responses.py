@@ -65,19 +65,19 @@ RESPUESTAS_CONTEXTUALES = {
         "Gracias, ya puedo usar estos datos para ofrecer recomendaciones locales y generar un itinerario básico."
     ],
     "analisis_riesgo": [
-        "⚠️ **Aviso de condiciones**: Detecté factores que pueden afectar tu viaje (clima, cierres temporales, temporada alta):",
-        "🔍 **Consideraciones de viaje**: Revisa disponibilidad y condiciones de accesibilidad en las rutas propuestas:",
-        "📊 **Recomendación práctica**: Te propongo alternativas en caso de condiciones adversas:"
+        "Aviso de condiciones: Detecté factores que pueden afectar tu viaje (clima, cierres temporales, temporada alta):",
+        "Consideraciones de viaje: Revisa disponibilidad y condiciones de accesibilidad en las rutas propuestas:",
+        "Recomendación práctica: Te propongo alternativas en caso de condiciones adversas:"
     ],
     "informacion_atractivo": [
-        "📍 **Información del atractivo**: Según los datos disponibles:",
-        "🕒 **Horarios y recomendaciones**: Ten en cuenta horarios, temporada y recomendaciones locales:",
-        "📸 **Consejos prácticos**: Mejor época para la visita, qué llevar y cómo llegar:",
+        "Información del atractivo: Según los datos disponibles:",
+        "Horarios y recomendaciones: Ten en cuenta horarios, temporada y recomendaciones locales:",
+        "Consejos prácticos: Mejor época para la visita, qué llevar y cómo llegar:",
     ],
     "recomendaciones": [
-        "💡 **Sugerencias de viaje**: Basado en tus preferencias, te recomiendo:",
-        "🎯 **Itinerario sugerido**: Un plan día a día según intereses y tiempo disponible:",
-        "📋 **Checklist de viaje**: Elementos y recomendaciones para tu experiencia en Caldas:"
+        "Sugerencias de viaje: Basado en tus preferencias, te recomiendo:",
+        "Itinerario sugerido: Un plan día a día según intereses y tiempo disponible:",
+        "Checklist de viaje: Elementos y recomendaciones para tu experiencia en Caldas:"
     ]
 }
 
@@ -120,19 +120,19 @@ RESPUESTAS_ROL = {
 # Respuestas con diferentes niveles de confianza (turismo)
 RESPUESTAS_CONFIANZA = {
     "alta": [
-        "✅ **Información verificada**: Según los datos disponibles, esta recomendación cumple tus criterios.",
-        "🎯 **Alta confianza**: Esta opción es apropiada según preferencias y disponibilidad conocida.",
-        "📌 **Recomendación segura**: Basado en fuentes y datos, esta es una buena elección."
+        "Información verificada: Según los datos disponibles, esta recomendación cumple tus criterios.",
+        "Alta confianza: Esta opción es apropiada según preferencias y disponibilidad conocida.",
+        "Recomendación segura: Basado en fuentes y datos, esta es una buena elección."
     ],
     "media": [
-        "📋 **Confianza media**: Hay información parcial o variables (clima, temporada) que podrían afectar la elección.",
-        "🔍 **Evaluación preliminar**: Requiere confirmación de disponibilidad o condiciones locales.",
-        "🟡 **Sugerencia tentativa**: Útil como referencia, pero verifica horarios y reservas."
+        "Confianza media: Hay información parcial o variables (clima, temporada) que podrían afectar la elección.",
+        "Evaluación preliminar: Requiere confirmación de disponibilidad o condiciones locales.",
+        "Sugerencia tentativa: Útil como referencia, pero verifica horarios y reservas."
     ],
     "baja": [
-        "⚠️ **Baja confianza**: Información incompleta o no verificada. Recomendable confirmar antes de viajar.",
-        "🔎 **Consulta adicional**: Necesito más datos (fechas, localidad exacta) para ofrecer una recomendación confiable.",
-        "ℹ️ **Referencia**: Úsalo como punto de partida y verifica con prestadores locales."
+        "Baja confianza: Información incompleta o no verificada. Recomendable confirmar antes de viajar.",
+        "Consulta adicional: Necesito más datos (fechas, localidad exacta) para ofrecer una recomendación confiable.",
+        "Referencia: Úsalo como punto de partida y verifica con prestadores locales."
     ]
 }
 
