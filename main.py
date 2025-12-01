@@ -80,7 +80,7 @@ def safe_predict_cluster(text, model, vectorizer):
 def limpiar_formato_respuesta(texto):
     """
     Limpia el formato de la respuesta eliminando asteriscos dobles (**) y encabezados markdown.
-    Mantiene los iconos/emojis intactos.
+    Mantiene los iconos/emojis intactos y formatea opciones numeradas con saltos de línea.
     """
     if not texto:
         return texto
@@ -94,6 +94,23 @@ def limpiar_formato_respuesta(texto):
     texto_limpio = re.sub(r'__([^_]+)__', r'\1', texto_limpio)
     # Eliminar backticks simples (código inline)
     texto_limpio = re.sub(r'`([^`]+)`', r'\1', texto_limpio)
+    
+    # Agregar saltos de línea antes de números de opciones (1., 2., 3., etc.)
+    # Esto formatea las opciones que vienen en texto plano
+    texto_limpio = re.sub(r'\s+(\d+)\.\s+', r'\n\n\1. ', texto_limpio)
+    
+    # También para emojis de números (1️⃣, 2️⃣, etc.)
+    texto_limpio = re.sub(r'\s+([\d]️⃣)\s+', r'\n\n\1 ', texto_limpio)
+    
+    # Agregar salto de línea después de "opciones:" o "alternativas:"
+    texto_limpio = re.sub(r'(opciones|alternativas|recomendaciones):\s*', r'\1:\n\n', texto_limpio, flags=re.IGNORECASE)
+    
+    # Limpiar múltiples saltos de línea consecutivos (máximo 2)
+    texto_limpio = re.sub(r'\n{3,}', '\n\n', texto_limpio)
+    
+    # Limpiar espacios al inicio
+    texto_limpio = texto_limpio.strip()
+    
     return texto_limpio
 
 
