@@ -79,7 +79,7 @@ def safe_predict_cluster(text, model, vectorizer):
 
 def limpiar_formato_respuesta(texto):
     """
-    Limpia el formato de la respuesta eliminando asteriscos dobles (**).
+    Limpia el formato de la respuesta eliminando asteriscos dobles (**) y encabezados markdown.
     Mantiene los iconos/emojis intactos.
     """
     if not texto:
@@ -88,6 +88,12 @@ def limpiar_formato_respuesta(texto):
     texto_limpio = re.sub(r'\*\*([^*]+)\*\*', r'\1', texto)
     # Eliminar asteriscos simples (cursivas markdown) pero mantener el contenido  
     texto_limpio = re.sub(r'\*([^*]+)\*', r'\1', texto_limpio)
+    # Eliminar encabezados markdown (###, ##, #) al inicio de líneas
+    texto_limpio = re.sub(r'^#{1,6}\s*', '', texto_limpio, flags=re.MULTILINE)
+    # Eliminar guiones bajos dobles (subrayado markdown)
+    texto_limpio = re.sub(r'__([^_]+)__', r'\1', texto_limpio)
+    # Eliminar backticks simples (código inline)
+    texto_limpio = re.sub(r'`([^`]+)`', r'\1', texto_limpio)
     return texto_limpio
 
 # Procesamiento de documentos
@@ -338,7 +344,8 @@ def save_document_to_db(filename: str, file_path: str, corpus_id: str):
 def save_conversation_to_db(user_question: str, bot_response: str, sources: list, confidence: str, evidence: list, cross_references: list):
     """Guarda la conversación en Supabase."""
     if not supabase:
-        return False
+        # Si no hay Supabase, guardar en archivo local
+        return save_conversation_local(user_question, bot_response, sources, confidence)
     try:
         data = {
             "id": str(uuid.uuid4()),
@@ -352,22 +359,73 @@ def save_conversation_to_db(user_question: str, bot_response: str, sources: list
             "corpus_id": get_corpus_id()
         }
         result = supabase.table("conversations").insert(data).execute()
+        print(f"✅ Conversación guardada en Supabase")
         return True
     except Exception as e:
-        print(f"⚠ Error guardando conversación: {e}")
+        print(f"⚠ Error guardando en Supabase: {e}")
+        # Fallback a archivo local
+        return save_conversation_local(user_question, bot_response, sources, confidence)
+
+
+def save_conversation_local(user_question: str, bot_response: str, sources: list = None, confidence: str = None):
+    """Guarda la conversación en archivo JSON local como alternativa a Supabase."""
+    history_file = "conversation_history.json"
+    try:
+        history = []
+        if os.path.exists(history_file):
+            try:
+                with open(history_file, 'r', encoding='utf-8') as f:
+                    history = json.load(f)
+            except Exception:
+                history = []
+        
+        # Limitar historial a últimas 500 conversaciones
+        if len(history) >= 500:
+            history = history[-499:]
+        
+        conversation = {
+            "id": str(uuid.uuid4()),
+            "user_question": user_question,
+            "bot_response": bot_response[:1000] if bot_response else "",  # Limitar tamaño
+            "sources": sources[:3] if sources else [],  # Solo las 3 primeras fuentes
+            "confidence": confidence,
+            "created_at": datetime.now().isoformat()
+        }
+        history.append(conversation)
+        
+        with open(history_file, 'w', encoding='utf-8') as f:
+            json.dump(history, f, ensure_ascii=False, indent=2)
+        
+        print(f"💾 Conversación guardada en historial local ({len(history)} total)")
+        return True
+    except Exception as e:
+        print(f"⚠ Error guardando historial local: {e}")
         return False
 
 
 def get_conversation_history(limit: int = 10):
-    """Obtiene el historial de conversaciones desde Supabase."""
-    if not supabase:
-        return []
+    """Obtiene el historial de conversaciones desde Supabase o archivo local."""
+    # Primero intentar Supabase
+    if supabase:
+        try:
+            result = supabase.table("conversations").select("*").order("created_at", desc=True).limit(limit).execute()
+            if result.data:
+                return result.data
+        except Exception as e:
+            print(f"⚠ Error obteniendo historial de Supabase: {e}")
+    
+    # Fallback a archivo local
+    history_file = "conversation_history.json"
     try:
-        result = supabase.table("conversations").select("*").order("created_at", desc=True).limit(limit).execute()
-        return result.data
+        if os.path.exists(history_file):
+            with open(history_file, 'r', encoding='utf-8') as f:
+                history = json.load(f)
+            # Devolver las últimas 'limit' conversaciones en orden inverso
+            return list(reversed(history[-limit:]))
     except Exception as e:
-        print(f"⚠ Error obteniendo historial: {e}")
-        return []
+        print(f"⚠ Error leyendo historial local: {e}")
+    
+    return []
 
 
 # ==========================================================
@@ -1047,6 +1105,12 @@ Responde en JSON válido con precios aproximados y cómo llegar."""},
                 
                 # Limpiar asteriscos del texto
                 text_only = limpiar_formato_respuesta(text_only)
+                
+                # Guardar en historial
+                try:
+                    save_conversation_to_db(user_text, text_only, sources, derived_confidence, [], [])
+                except Exception as e:
+                    print(f"⚠ Error guardando historial: {e}")
 
                 payload = {"response": text_only, "sources": sources, "confidence": derived_confidence}
                 return respond_and_cache(cache_key, payload)
@@ -1146,6 +1210,13 @@ Sé amigable, práctico y SIEMPRE incluye precios APROXIMADOS y cómo llegar."""
         respuesta_gpt = ai_response.choices[0].message.content
         # Limpiar asteriscos de la respuesta
         respuesta_gpt = limpiar_formato_respuesta(respuesta_gpt)
+        
+        # Guardar en historial
+        try:
+            save_conversation_to_db(user_text, respuesta_gpt, [], "media", [], [])
+        except Exception as e:
+            print(f"⚠ Error guardando historial: {e}")
+        
         return jsonify({"response": respuesta_gpt})
     except TimeoutError as e:
         print("⚠ OpenAI timeout (GPT):", e)
